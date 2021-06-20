@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include head.ejs %>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <%- include navbar.ejs %>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th class="th-sm">First Name</th>
+          <th class="th-sm">Last Name</th>
+          <th class="th-sm">Organization</th>
+          <th class="th-sm">EmployeeId</th>
+          <th class="th-sm">Email</th>
+          <th class="th-sm">Created</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Organization</th>
+          <th>EmployeeId</th>
+          <th>Email</th>
+          <th>Created</th>
+        </tr>
+      </tfoot>
+    </table>
+    <script>
+      $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+      });
+
+      $.ajax({
+        method: 'GET',
+        url: '/users',
+        success: function(data) {
+          console.log(data);
+          let tableElems = ''
+          if (data.status == "success") {
+
+            data.result.forEach(element => {
+              tableElems += `<tr>
+                <td>${element.firstname}</td>
+                <td>${element.lastname}</td>
+                <td>${element.organization}</td>
+                <td>${element.employeeId}</td>
+                <td>${element.email}</td>
+                <td>${element.createdOn}</td>
+              </tr>`
+            });
+            
+            $('table>tbody').html(tableElems);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

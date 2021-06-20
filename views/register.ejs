@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include head.ejs %>
+    <link rel="stylesheet" href="/stylesheets/login.css">
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+      
+          <!-- Icon -->
+          <div class="fadeIn first">
+            <img src="/images/login-logo.png" style="width: 30%;" id="icon" alt="User Icon" />
+          </div>
+      
+          <!-- Login Form -->
+          <!-- <form onsubmit="registerUser()" method="POST"> -->
+            <input type="text" id="firstname" class="fadeIn second" name="firstname" placeholder="First Name">
+            <input type="text" id="lastname" class="fadeIn second" name="lastname" placeholder="Last Name">
+            <input type="text" id="organization" class="fadeIn second" name="organization" placeholder="Organization Name">
+            <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email">
+            <input type="password" id="password" class="fadeIn third" name="login" placeholder="Password">
+            <input type="submit" class="fadeIn fourth" onclick="registerUser()" value="Sign up">
+          <!-- </form> -->
+      
+          <!-- Remind Passowrd -->
+          <div id="formFooter">
+            <a class="underlineHover" href="/login">Already have an account? Log In</a>
+          </div>
+      
+        </div>
+      </div>
+      <script>
+          function registerUser() {
+              let firstname = document.getElementById('firstname').value;
+              let lastname = document.getElementById('lastname').value;
+              let organization = document.getElementById('organization').value;
+              let email = document.getElementById('email').value;
+              let password = document.getElementById('password').value;
+              // debugger
+              if (!firstname || !lastname || !organization || !email || !password) {
+                  alert('Provide all necessary values');
+              } else {
+                  let respObj = {
+                      firstname: firstname,
+                      lastname: lastname,
+                      organization: organization,
+                      email: email,
+                      password: password
+                  }
+                  $.ajax({
+                      method: 'POST',
+                      url: '/register',
+                      data: respObj,
+                      success: function(data) {
+                          console.log(data);
+                          if (data.status == "success") {
+                              window.location.href = '/login'
+                          }
+                      },
+                      error: function(err) {
+                          alert(err.responseJSON.error);
+                          console.log(err);
+                      }
+                  })
+              }
+          }
+      </script>
+</body>
+</html>

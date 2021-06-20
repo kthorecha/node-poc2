@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include head.ejs %>
+    <link rel="stylesheet" href="/stylesheets/login.css">
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+      
+          <!-- Icon -->
+          <div class="fadeIn first">
+            <img src="/images/login-logo.png" id="icon" alt="User Icon" />
+          </div>
+      
+          <!-- Login Form -->
+          <!-- <form> -->
+            <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email">
+            <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password">
+            <input type="submit" class="fadeIn fourth" onclick="loginUser()" value="Log In">
+          <!-- </form> -->
+      
+          <!-- Remind Passowrd -->
+          <div id="formFooter">
+            <!-- <a class="underlineHover" href="#">Forgot Password?</a> -->
+            <a class="underlineHover" href="/register">New here? Register!</a>
+          </div>
+      
+        </div>
+      </div>
+</body>
+<script>
+  function loginUser() {
+    let email = $('#email').val();
+    let password = $('#password').val();
+    if (email != '' && password != '') {
+      let obj = {email: email, password: password};
+      $.ajax({
+        method: 'POST',
+        url: '/login',
+        data: obj,
+        success: function(data) {
+          // console.log(data)
+          if (data.status == "success") {
+            sessionStorage.setItem('userToken',data.token);
+            window.location.href = `/home?token=${data.token}`;
+          }
+        }
+      })
+    }
+  }
+</script>
+</html>

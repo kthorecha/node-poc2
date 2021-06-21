@@ -43,15 +43,15 @@
                   alert('Provide all necessary values');
               } else {
                   let respObj = {
-                      firstname: firstname,
-                      lastname: lastname,
-                      organization: organization,
-                      email: email,
+                      firstName: firstname,
+                      lastName: lastname,
+                      organizationName: organization,
+                      emailId: email,
                       password: password
                   }
                   $.ajax({
                       method: 'POST',
-                      url: '/register',
+                      url: '/users/create',
                       data: respObj,
                       success: function(data) {
                           console.log(data);

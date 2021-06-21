@@ -15,7 +15,7 @@
           <th class="th-sm">First Name</th>
           <th class="th-sm">Last Name</th>
           <th class="th-sm">Organization</th>
-          <th class="th-sm">EmployeeId</th>
+          <!-- <th class="th-sm">EmployeeId</th> -->
           <th class="th-sm">Email</th>
           <th class="th-sm">Created</th>
         </tr>
@@ -27,15 +27,19 @@
           <th>First Name</th>
           <th>Last Name</th>
           <th>Organization</th>
-          <th>EmployeeId</th>
+          <!-- <th>EmployeeId</th> -->
           <th>Email</th>
           <th>Created</th>
         </tr>
       </tfoot>
     </table>
     <script>
+      let sessionUser = sessionStorage.getItem('userToken');
+      if (!sessionUser) {
+        window.location.href = '/login'
+      }
       $(document).ready(function () {
-        $('#dtBasicExample').DataTable();
+        $('#dtBasicExample').DataTable({searching: false, paging: false, info: false});
         $('.dataTables_length').addClass('bs-select');
       });
 
@@ -49,12 +53,11 @@
 
             data.result.forEach(element => {
               tableElems += `<tr>
-                <td>${element.firstname}</td>
-                <td>${element.lastname}</td>
-                <td>${element.organization}</td>
-                <td>${element.employeeId}</td>
-                <td>${element.email}</td>
-                <td>${element.createdOn}</td>
+                <td>${element.firstName}</td>
+                <td>${element.lastName}</td>
+                <td>${element.organizationName}</td>
+                <td>${element.emailId}</td>
+                <td>${element.createdAt}</td>
               </tr>`
             });
             
